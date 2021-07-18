@@ -1,11 +1,23 @@
 import requests 
 from bs4 import BeautifulSoup 
 
-url = 'https://ua.sinoptik.ua/%D0%BF%D0%BE%D0%B3%D0%BE%D0%B4%D0%B0-%D0%B4%D1%80%D0%BE%D0%B3%D0%BE%D0%B1%D0%B8%D1%87'
+place = input("Введіть ваше місто ")
+url = 'https://ua.sinoptik.ua/погода-' + str(place)
 response = requests.get(url)
 soup = BeautifulSoup(response.text, 'lxml')
-items = soup.find_all('div', class_='tabs')
+
+today_time = soup.find_all('p', class_='today-time')
+today_temp = soup.find_all('p', class_='today-temp')
+prediction = soup.find_all('div', class_='description')
+
+for _ in today_time:
+    print(_.text)
+for i in today_temp:
+    print(i.text)
+for i in prediction:
+    print(i.text)
 
 
-for item in items:
-    print(item.text)
+
+
+
